@@ -8,8 +8,6 @@ let hoursOpen = ['6am', '7am', '8am', '9am', '10am','11am', '12am', '1pm', '2pm'
 
 const SeattleStore = {
   location: 'Seattle',
-  hourOpen: 6,
-  hourClose: 20,
   minCust: 23,
   maxCust: 65,
   avgCust: 6.3,
