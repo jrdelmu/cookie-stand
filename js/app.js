@@ -1,39 +1,46 @@
 'use strict';
 
-const locationDiv = document.getElementById("locations");
+const locationTable = document.getElementById("locations");
 
 const hoursOpen = ['6am', '7am', '8am', '9am', '10am','11am', '12am', '1pm', '2pm', '3pm','4pm', '5pm', '6pm', '7pm']
 
-Stores.storeFronts = [];
+Store.storeFronts = [];
 
-function Stores(location, minCust, maxCust, avgCust, hourlySales=[]){
+function Store(location, minCust, maxCust, avgCust, hourlySales=[]){
   this.location = location;
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgCust = avgCust;
-  this.hourlySales = hourlySales
-  
-  Stores.storeFronts.push(this);
+  this.hourlySales = [];
+  // adds the new location we just constructed to the Store.storeFronts array
+  Store.storeFronts.push(this);
+}
+// prototype methods can be accessed from any location
+Store.prototype.ranNumCust = function(){
+  return Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
 }
 
-new Stores('Seattle', 23, 65, 6.3)
-new Stores('Tokyo', 23, 65, 6.3)
-new Stores('Dubai', 23, 65, 6.3)
-new Stores('Paris', 23, 65, 6.3)
-new Stores('Lima', 23, 65, 6.3)
-
-Stores.prototype.getRanNumCust = function(){
-  var ranNumCust = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-  return ranNumCust;    
+Store.prototype.currentSalePerHour = function(){
+    for(var i = 0; i < hoursOpen.length; i++){
+      var cookiePurchase = this.ranNumCust() * this.avgCust;
+      this.hourlySales.push(Math.ceil(cookiePurchase));
+  }
 }
-Stores.hourlySales =[];
-Stores.prototype.getCurrentSalePerHour = function(){
-  for(var i = 0; i < hoursOpen.length; i++){
-    var cookiePurchase = this.ranNumCust() * this.avgCust;
-    this.hourlySales.push(Math.ceil(cookiePurchase));
+const seattle = new Store('Seattle', 23, 65, 6.3)
+const tokyo = new Store('Tokyo', 23, 65, 6.3)
+const Dubai = new Store('Dubai', 23, 65, 6.3)
+const paris = new Store('Paris', 23, 65, 6.3)
+const lima = new Store('Lima', 23, 65, 6.3)
+
+// adds data to each stores hourlySales array
+function fillHourlySalesStoreFronts(){
+  for(let i = 0; i < Store.storeFronts.length; i ++){
+    const currentStore = Store.storeFronts[i];
+    currentStore.currentSalePerHour();
   }
 }
 
+fillHourlySalesStoreFronts();
 
 
 // // Stores the min/max hourly customers, and the average cookies per customer, in object properties
@@ -173,29 +180,44 @@ function _makeElement(tag,parent,text){ // underscore is a helper function
   return element;
 }
 
-Stores.prototype.renderLocation = function(){
+//
+Store.prototype.renderLocation = function(body){
   var total = 0;
-  const newArticle = _makeElement ('article', locationDiv, null)
-  _makeElement('h3', newArticle, Stores.location)
-  const newUl = _makeElement('ul', newArticle, null);
-  for(var i = 0; i < hoursOpen.length; i ++){
-    const text = `${hoursOpen[i]}: ${Stores.hourlySales[i]} cookies`;
-    total += Stores.hourlySales[i];
-    _makeElement('li', newUl, text);
+  const rowElem = document.createElement('tr');
+  body.appendChild(rowElem);
+  const thElem = _makeElement('th', rowElem, this.location);
+  for(let i = 0; i < hoursOpen.length; i ++){
+    let cookiesThisHour = this.hourlySales[i];
+    total += cookiesThisHour;
+    _makeElement('td', rowElem, cookiesThisHour)
   }
-  var totalsString = `Total: ${total} cookies`;
-  _makeElement('li', newUl, totalsString);
-};
-console.log(Stores.storeFronts)
+  _makeElement('td', rowElem, total)
+}
+  // const newArticle = _makeElement ('article', locationDiv, null)
+  // _makeElement('h3', newArticle, location.name);
+//   const newUl = _makeElement('ul', newArticle, null);
+//   for(var i = 0; i < hoursOpen.length; i ++){
+//     const text = `${hoursOpen[i]}: ${location.hourlySales[i]} cookies`;
+//     total += location.hourlySales[i];
+//     _makeElement('li', newUl, text);
+//   }
+//   var totalsString = `Total: ${total} cookies`;
+//   _makeElement('li', newUl, totalsString);
+// };
+
 // const locationsArray = [seattle, tokyo, dubai, paris, lima]
 
 //loop through all locations and call these functions
 function renderAllLocations() {
-  for(var i = 0; i < Stores.storeFronts.length; i ++){
-  const currentLocation = Stores.storeFronts[i];
-  // Stores.currentLocation.currentSalePerHour()
-  currentLocation.renderLocation();
+  let tbodyElem = _makeElement('tbody', locationTable, null)
+  for(let i = 0; i < Store.storeFronts.length; i ++){
+    Store.storeFronts[i].renderLocation(tbodyElem)
   }
+  // for(var i = 0; i < locationsArray.length; i ++){
+  // const currentLocation = locationsArray[i];
+  // currentLocation.currentSalePerHour()
+  // renderLocation(currentLocation);
+  // }
 }
 
 renderAllLocations();
