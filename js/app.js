@@ -27,10 +27,10 @@ Store.prototype.currentSalePerHour = function(){
   }
 }
 const seattle = new Store('Seattle', 23, 65, 6.3)
-const tokyo = new Store('Tokyo', 23, 65, 6.3)
-const Dubai = new Store('Dubai', 23, 65, 6.3)
-const paris = new Store('Paris', 23, 65, 6.3)
-const lima = new Store('Lima', 23, 65, 6.3)
+const tokyo = new Store('Tokyo', 3, 24, 1.2)
+const Dubai = new Store('Dubai', 11, 38, 3.7)
+const paris = new Store('Paris', 20, 38, 2.3)
+const lima = new Store('Lima', 2, 16, 4.6)
 
 // adds data to each stores hourlySales array
 function fillHourlySalesStoreFronts(){
@@ -219,5 +219,23 @@ function renderAllLocations() {
   // renderLocation(currentLocation);
   // }
 }
+function makeTheFooter(){
+  const tfootElem = _makeElement('tfoot', locationTable, null);
+  const rowElem = _makeElement('tr', tfootElem, null);
+  _makeElement('th', rowElem, 'Hourly Total')
+  let hourlyTotal = 0;
+  let grandTotal = 0;
+  for(let i = 0; i < hoursOpen.length; i ++){
+    for(let j = 0; j < Store.storeFronts.length; j ++){
+    let currentStore = Store.storeFronts[j];
+    hourlyTotal += currentStore.hourlySales[i]
+    }
+    _makeElement('td', rowElem, hourlyTotal);
+    grandTotal += hourlyTotal;
+    hourlyTotal = 0;
+  }
+  _makeElement('td', rowElem, grandTotal)
+}
 
 renderAllLocations();
+makeTheFooter();
