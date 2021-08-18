@@ -33,9 +33,9 @@ const seattle = {
 
 const tokyo = {
   location: 'Tokyo',
-  minCust: 23,
-  maxCust: 65,
-  avgCust: 6.3,
+  minCust: 3,
+  maxCust: 24,
+  avgCust: 1.2,
   hourlySales: [],
 // Uses a method of that object to generate a random number of customers per hour.
   ranNumCust: function(){
@@ -56,9 +56,9 @@ const tokyo = {
 
 const dubai = {
   location: 'Dubai',
-  minCust: 23,
-  maxCust: 65,
-  avgCust: 6.3,
+  minCust: 11,
+  maxCust: 38,
+  avgCust: 3.7,
   hourlySales: [],
 // Uses a method of that object to generate a random number of customers per hour.
   ranNumCust: function(){
@@ -79,9 +79,9 @@ const dubai = {
 
 const paris = {
   location: 'Paris',
-  minCust: 23,
-  maxCust: 65,
-  avgCust: 6.3,
+  minCust: 20,
+  maxCust: 38,
+  avgCust: 2.3,
   hourlySales: [],
 // Uses a method of that object to generate a random number of customers per hour.
   ranNumCust: function(){
@@ -102,9 +102,9 @@ const paris = {
 
 const lima = {
   location: 'Lima',
-  minCust: 23,
-  maxCust: 65,
-  avgCust: 6.3,
+  minCust: 2,
+  maxCust: 16,
+  avgCust: 4.6,
   hourlySales: [],
 // Uses a method of that object to generate a random number of customers per hour.
   ranNumCust: function(){
