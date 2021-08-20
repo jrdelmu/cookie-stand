@@ -260,7 +260,8 @@ function handleSubmit (event) {
 let userStore = new Store(location, minCust, maxCust, avgCust);
 console.log(userStore);
 userStore.currentSalePerHour();
-userStore.renderLocation();
+// at this point, erase the contents of the table an rerender a new thead, tbody and tfoot
+renderAllLocations();
 event.target.reset();
 
 }
