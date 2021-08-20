@@ -1,12 +1,14 @@
 'use strict';
 
+const formElem = document.getElementById('addStore')
+
 const locationTable = document.getElementById("locations");
 
 const hoursOpen = ['6am', '7am', '8am', '9am', '10am','11am', '12am', '1pm', '2pm', '3pm','4pm', '5pm', '6pm', '7pm']
 
 Store.storeFronts = [];
 
-function Store(location, minCust, maxCust, avgCust, hourlySales=[]){
+function Store(location, minCust, maxCust, avgCust){
   this.location = location;
   this.minCust = minCust;
   this.maxCust = maxCust;
@@ -219,6 +221,7 @@ function renderAllLocations() {
   // renderLocation(currentLocation);
   // }
 }
+
 function makeTheFooter(){
   const tfootElem = _makeElement('tfoot', locationTable, null);
   const rowElem = _makeElement('tr', tfootElem, null);
@@ -237,5 +240,32 @@ function makeTheFooter(){
   _makeElement('td', rowElem, grandTotal)
 }
 
+
+
+function handleSubmit (event) {
+  event.preventDefault()
+  console.log(event);
+  console.log(event.target.location.value);
+  const location = event.target.location.value;
+  let minCust = event.target.minCust.value;
+  minCust = parseInt(minCust);
+  let maxCust = event.target.maxCust.value;
+  maxCust = parseInt(maxCust);
+  let avgCust = event.target.avgCust.value;
+  avgCust = parseInt(avgCust);
+  // let hourlySales = event.target.hourlySales.value;
+
+
+
+let userStore = new Store(location, minCust, maxCust, avgCust);
+console.log(userStore);
+userStore.currentSalePerHour();
+userStore.renderLocation();
+event.target.reset();
+
+}
+
 renderAllLocations();
 makeTheFooter();
+
+formElem.addEventListener('submit', handleSubmit);

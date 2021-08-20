@@ -4,12 +4,45 @@
   <title>Salmon Cookies</title>
 </head>
 <body>
+  <main>
   <nav>
     <a href="index.html">Index link</a>
   </nav>
-  <div id="locations">
 
-  </div>
+  <h2>Add Store</h2>
+  <form id="addStore">
+    <fieldset>
+      <legend>Store Information</legend>
+      <label for="">Location:
+        <input name= "location" type="text" placeholder="Location">
+      </label>
+      <br>
+      <label for="">Minimum number of customers per hour:
+        <input name = "minCust" type="number">
+      </label>
+      <br>
+      <label for="">Maximum number of customers per hour:
+        <input name = "maxCust" type="number">
+      </label>
+      <br>
+      <label for="">Average number of cookies purchased per customer:
+        <input name = "avgCust" type="number">
+      </label>
+      <br>
+      <button type="submit">Submit</button>
+    </fieldset>
+
+  </form>
+  <div id="locations"></div>
+</main>
+  <footer>
+
+  </footer>
   <script src="/js/app.js"></script>
 </body>
 </html>
+
+<!-- location
+min cust
+max cust
+avg cookies sold -->
